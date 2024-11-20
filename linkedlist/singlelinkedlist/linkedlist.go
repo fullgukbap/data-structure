@@ -158,16 +158,20 @@ func (l LinkedList[T]) findPrevNode(currentNode *Node[T]) *Node[T] {
 	return nil
 }
 
-func (l *LinkedList[T]) PopFront() {
+func (l *LinkedList[T]) PopFront() *Node[T] {
 	if l.root == nil {
-		return
+		return nil
 	}
+
+	rootNode := l.root
 
 	l.root.next, l.root = nil, l.root.next
 	if l.root == nil {
 		l.tail = nil
 	}
 	l.count--
+
+	return rootNode
 }
 
 func (l *LinkedList[T]) RemoveNode(target *Node[T]) {
@@ -184,4 +188,36 @@ func (l *LinkedList[T]) RemoveNode(target *Node[T]) {
 	prevNode.next = target.next
 	target.next = nil
 	l.count--
+}
+
+func (l *LinkedList[T]) Reverse() {
+	// 쉬운 방법
+	newLinkedList := &LinkedList[T]{}
+
+	for l.root != nil {
+		popedNode := l.PopFront()
+		newLinkedList.PushFront(popedNode.Value)
+	}
+
+	l.count = newLinkedList.count
+	l.root = newLinkedList.root
+	l.tail = newLinkedList.tail
+}
+func (l *LinkedList[T]) SwapReverse() {
+	if l.root == nil {
+		return
+	}
+
+	node := l.root
+	next := node.next
+	l.root.next = nil
+
+	for next != nil {
+		nextNext := next.next
+		next.next = node
+		node = next
+		next = nextNext
+	}
+
+	l.root, l.tail = l.tail, l.root
 }

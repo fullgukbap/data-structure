@@ -187,12 +187,13 @@ func (l *LinkedList[T]) Reverse() {
 	if l.root == nil {
 		return
 	}
+
 	node := l.root
+
 	var next *Node[T]
 
 	for node != nil {
 		next = node.next
-
 		node.prev, node.next = node.next, node.prev
 		node = next
 	}

@@ -95,3 +95,18 @@ func TestInsertBefore(t *testing.T) {
 
 	assert.Equal(t, l.GetAt(1).Value, 6)
 }
+
+func TestReverse(t *testing.T) {
+	var l LinkedList[int]
+
+	l.PushBack(1)
+	l.PushBack(2)
+	l.PushBack(3)
+	l.PushBack(4)
+	l.Reverse()
+
+	assert.Equal(t, 4, l.Front().Value)
+	assert.Equal(t, 1, l.Back().Value)
+	assert.Equal(t, 3, l.GetAt(1).Value)
+
+}
